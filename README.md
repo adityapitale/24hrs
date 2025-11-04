@@ -27,9 +27,11 @@ PhishGuard is a modular phishing detection and response platform that combines r
 
 ## Getting Started
 
-1. Duplicate `config/.env.example` and populate credentials for Gmail, Twilio, PostgreSQL, and Redis.
-2. Build service containers locally using `docker compose` definitions (coming soon) or run FastAPI apps directly with `uvicorn`.
-3. Refer to `/docs` for detailed setup guides, API documentation, and architectural references as they are completed.
+1. Copy `.env.example` to `.env` and adjust connection strings if needed.
+2. Install Docker and start the stack: `docker compose -f infrastructure/docker/docker-compose.yml up --build`.
+3. Once services are healthy, the ingestion API is available at `http://localhost:8000` and Flower at `http://localhost:5555`.
+4. In a separate terminal, trigger a sample webhook: `python scripts/send_test_webhook.py`.
+5. Refer to `/docs` for detailed setup guides, API documentation, and architectural references as they are completed.
 
 ## Roadmap
 
