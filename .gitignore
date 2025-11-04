@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+build/
+dist/
+*.egg-info/
+
+# Environments & secrets
+.env
+config/.env
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+# Data & artifacts
+data/
+!data/.gitkeep
+sandbox_artifacts/
+!sandbox_artifacts/.gitkeep
+logs/
+
+# Node
+node_modules/
+
+# Coverage & pytest
+.coverage
+htmlcov/
+pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
