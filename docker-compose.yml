@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: phishguard
+      POSTGRES_USER: phishguard
+      POSTGRES_PASSWORD: change_me
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  ingestion:
+    build:
+      context: ./services/ingestion
+      dockerfile: ../../infrastructure/docker/Dockerfile.service
+    environment:
+      - ENV_FILE=/config/.env.example
+    volumes:
+      - ./services/ingestion:/app
+    ports:
+      - "8001:8000"
+    depends_on:
+      - redis
+
+  feature_extraction:
+    build:
+      context: ./services/feature_extraction
+      dockerfile: ../../infrastructure/docker/Dockerfile.service
+    volumes:
+      - ./services/feature_extraction:/app
+    ports:
+      - "8002:8000"
+    depends_on:
+      - redis
+      - postgres
+
+  ml_engine:
+    build:
+      context: ./services/ml_engine
+      dockerfile: ../../infrastructure/docker/Dockerfile.service
+    volumes:
+      - ./services/ml_engine:/app
+    ports:
+      - "8003:8000"
+    depends_on:
+      - redis
+      - postgres
+
+volumes:
+  postgres_data:
